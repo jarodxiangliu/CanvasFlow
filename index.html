@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CanvasFlow | Professional Obsidian Canvas Editor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Architects+Daughter&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
+    <script src="https://unpkg.com/roughjs@latest/bundled/rough.js"></script>
+</head>
+<body class="light-theme">
+    <div id="drop-zone">
+        <div class="drop-card">
+            <div class="drop-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+            </div>
+            <h2>Import Canvas</h2>
+            <p>Drag your <b>.canvas</b> file here to start editing</p>
+            <button class="primary-btn" onclick="document.getElementById('file-input').click()">Browse Files</button>
+            <input type="file" id="file-input" accept=".canvas" style="display: none;">
+        </div>
+    </div>
+
+    <div id="canvas-container" style="display: none;">
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">CanvasFlow</div>
+                <div id="filename-display" class="filename">Untitled.canvas</div>
+            </div>
+            <div class="header-center">
+                <div class="mode-selector">
+                    <button id="view-mode-btn" class="mode-btn active">Viewer</button>
+                    <button id="edit-mode-btn" class="mode-btn">Editor</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="save-btn" class="primary-btn hidden">Save Canvas</button>
+                <button id="close-canvas" class="ghost-btn">Exit</button>
+            </div>
+        </header>
+
+        <div id="canvas-viewport">
+            <div id="canvas-content">
+                <svg id="edges-layer"></svg>
+                <div id="nodes-layer"></div>
+            </div>
+        </div>
+        
+        <div class="floating-controls">
+            <div class="control-group style-toggle-wrap">
+                <span class="label">Hand-drawn</span>
+                <label class="switch">
+                    <input type="checkbox" id="style-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="divider"></div>
+            <div class="control-group">
+                <span class="label">Expand</span>
+                <label class="switch">
+                    <input type="checkbox" id="layout-toggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="divider"></div>
+            <div class="control-group">
+                <button id="zoom-out" title="Zoom Out">-</button>
+                <span id="zoom-level">100%</span>
+                <button id="zoom-in" title="Zoom In">+</button>
+                <button id="fit-view" title="Fit View">Fit</button>
+            </div>
+        </div>
+
+        <div id="edit-toolbar" class="edit-toolbar hidden">
+            <button id="add-text-node" title="Add Text Node"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></button>
+            <button id="add-link-node" title="Add Link Node"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+            <button id="add-group-node" title="Add Group Node"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg></button>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="context-menu" class="context-menu hidden">
+        <ul>
+            <li id="cm-edit">Edit Node</li>
+            <li id="cm-color">Change Color</li>
+            <li class="separator"></li>
+            <li id="cm-delete" class="danger">Delete Node</li>
+        </ul>
+    </div>
+
+    <!-- Node Editor Modal -->
+    <div id="node-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">Edit Node</h3>
+            <div class="form-group">
+                <label>Content / URL</label>
+                <textarea id="node-input" rows="5" placeholder="Enter text or URL..."></textarea>
+            </div>
+            <div class="modal-actions">
+                <button id="modal-cancel" class="ghost-btn">Cancel</button>
+                <button id="modal-save" class="primary-btn">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
