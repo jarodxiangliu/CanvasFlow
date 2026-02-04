@@ -1,0 +1,16 @@
+{
+  "name": "canvasflow",
+  "version": "1.0.0",
+  "description": "A lightweight web viewer and editor for Obsidian .canvas files",
+  "scripts": {
+    "deploy:cf": "npx wrangler pages deploy . --project-name=canvas --commit-dirty=true",
+    "deploy:cf:staging": "npx wrangler pages deploy . --project-name=canvas --branch=staging --commit-dirty=true",
+    "preview": "npx wrangler pages dev . --port=8787",
+    "start": "npx serve . -p 3000",
+    "build": "echo 'No build needed for static site'"
+  },
+  "devDependencies": {
+    "wrangler": "^3.0.0",
+    "serve": "^14.2.0"
+  }
+}

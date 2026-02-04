@@ -40,6 +40,22 @@ You only need a modern web browser to run CanvasFlow.
 - `script.js`: Core logic for file handling, state management, and rendering.
 - `style.css`: Modern, responsive styling with support for multiple themes.
 
+## 🚀 Deployment
+
+### Cloudflare Pages
+
+本项目支持通过 Wrangler CLI 部署到 Cloudflare Pages。
+
+```bash
+# 安装依赖
+npm install
+
+# 部署
+npm run deploy:cf
+```
+
+详情查看 [DEPLOY.md](./DEPLOY.md)
+
 ## 📄 License
 
 This project is open-source. Feel free to use and modify it for your own needs.
